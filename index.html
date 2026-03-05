@@ -3,60 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kip Control System</title>
+    <title>Kip Control Premium</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body {
-            background: #0f0f0f;
-            color: #00ffcc;
-            font-family: 'Segoe UI', sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        .header {
-            font-size: 24px;
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px #00ffcc;
-        }
-        .btn {
-            background: transparent;
-            border: 2px solid #00ffcc;
-            color: #00ffcc;
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
-            width: 80%;
-            margin: 10px;
-        }
-        .btn:active {
-            background: #00ffcc;
-            color: #000;
-            box-shadow: 0 0 20px #00ffcc;
-        }
-        .status {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #666;
-        }
+        body { background: #050505; color: #00f2ff; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 15px; margin: 0; }
+        .card { background: linear-gradient(145deg, #111, #1a1a1a); border: 1px solid #00f2ff; border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 0 15px rgba(0,242,255,0.1); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .btn { background: #111; border: 1px solid #444; color: #eee; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.2s; border: 1px solid #333; }
+        .btn:active { background: #00f2ff; color: #000; border-color: #00f2ff; box-shadow: 0 0 10px #00f2ff; }
+        .btn-blue { border-color: #00f2ff; color: #00f2ff; }
+        .btn-red { border-color: #ff4444; color: #ff4444; }
+        h2 { font-size: 14px; text-transform: uppercase; color: #888; margin: 10px 0; border-bottom: 1px solid #222; padding-bottom: 5px; }
     </style>
 </head>
 <body>
-    <div class="header">KIP CONTROL</div>
-    
-    <button class="btn" onclick="sendCommand('screenshot')">📸 СДЕЛАТЬ СКРИНШОТ</button>
-    <button class="btn" onclick="sendCommand('msg')">💬 ТЕСТОВОЕ ОКНО</button>
-    
-    <div class="status">System Active | Secure Connection</div>
+    <div class="card">
+        <h1 style="margin:0; font-size: 22px;">KIP CONTROL</h1>
+        <div id="status" style="font-size: 12px; color: #00ff88;">● SYSTEM ONLINE</div>
+    </div>
+
+    <h2>Мультимедиа & Звук</h2>
+    <div class="grid">
+        <button class="btn btn-blue" onclick="send('vol_up')">🔊 ГРОМЧЕ</button>
+        <button class="btn btn-blue" onclick="send('vol_down')">🔉 ТИШЕ</button>
+    </div>
+
+    <h2>Шпионаж & Контроль</h2>
+    <div class="grid">
+        <button class="btn" onclick="send('screenshot')">📸 СКРИН</button>
+        <button class="btn" onclick="send('webcam')">👁 КАМЕРА</button>
+        <button class="btn" onclick="send('record_mic')">🎙 МИКРОФОН</button>
+        <button class="btn" onclick="send('sys_status')">📊 СТАТУС</button>
+    </div>
+
+    <h2>Быстрый запуск</h2>
+    <div class="grid">
+        <button class="btn" onclick="send('launch_game_1')">🎮 CS2</button>
+        <button class="btn" onclick="send('launch_game_2')">⛏ MINECRAFT</button>
+        <button class="btn" onclick="send('chrome')">🌐 BROWSER</button>
+        <button class="btn btn-red" onclick="send('siren')">🚨 СИРЕНА</button>
+    </div>
+
+    <button class="btn btn-red" style="width:100%" onclick="tg.close()">ЗАКРЫТЬ ПУЛЬТ</button>
 
     <script>
         const tg = window.Telegram.WebApp;
-        tg.expand(); // Развернуть на весь экран
-
-        async function sendCommand(action) {
-            // Отправляем данные боту
-            tg.sendData(action);
+        tg.expand();
+        function send(cmd) {
+            tg.sendData(cmd);
+            if (tg.HapticFeedback) {
+                tg.HapticFeedback.impactOccurred('medium'); 
+            }
         }
     </script>
 </body>
