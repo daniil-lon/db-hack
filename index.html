@@ -2,58 +2,94 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kip Control Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Passive Capital</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { background: #050505; color: #00f2ff; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 15px; margin: 0; }
-        .card { background: linear-gradient(145deg, #111, #1a1a1a); border: 1px solid #00f2ff; border-radius: 15px; padding: 15px; margin-bottom: 15px; box-shadow: 0 0 15px rgba(0,242,255,0.1); }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .btn { background: #111; border: 1px solid #444; color: #eee; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: 0.2s; border: 1px solid #333; }
-        .btn:active { background: #00f2ff; color: #000; border-color: #00f2ff; box-shadow: 0 0 10px #00f2ff; }
-        .btn-blue { border-color: #00f2ff; color: #00f2ff; }
-        .btn-red { border-color: #ff4444; color: #ff4444; }
-        h2 { font-size: 14px; text-transform: uppercase; color: #888; margin: 10px 0; border-bottom: 1px solid #222; padding-bottom: 5px; }
+        :root { --bg-color: #0b0e16; --card-bg: #161b26; --accent-blue: #246bfd; --text-gray: #8a8d97; }
+        body { background-color: var(--bg-color); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; overflow-x: hidden; }
+        .page { display: none; padding-bottom: 80px; }
+        .page.active { display: block; }
+        
+        /* Дизайн карточек как на скринах */
+        .balance-card { background: linear-gradient(135deg, #1c2538 0%, #111827 100%); border-radius: 24px; padding: 25px; margin-bottom: 15px; border: 1px solid #ffffff0a; position: relative; }
+        .blue-gradient-card { background: linear-gradient(135deg, #246bfd 0%, #0b3fa9 100%); border-radius: 24px; padding: 25px; margin-bottom: 15px; }
+        
+        .amount { font-size: 36px; font-weight: bold; margin: 10px 0; }
+        .label { color: var(--text-gray); font-size: 12px; text-transform: uppercase; }
+        
+        .btn-main { background: var(--accent-blue); color: white; border: none; width: 100%; padding: 15px; border-radius: 16px; font-weight: 600; margin-top: 10px; }
+        .btn-secondary { background: #ffffff0a; color: white; border: 1px solid #ffffff10; width: 100%; padding: 12px; border-radius: 16px; margin-top: 10px; }
+
+        /* Нижняя навигация */
+        .nav { position: fixed; bottom: 0; left: 0; width: 100%; background: #111827; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #ffffff10; }
+        .nav-item { color: var(--text-gray); font-size: 10px; text-align: center; cursor: pointer; }
+        .nav-item.active { color: var(--accent-blue); }
+        .nav-item i { font-size: 20px; display: block; margin-bottom: 3px; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1 style="margin:0; font-size: 22px;">KIP CONTROL</h1>
-        <div id="status" style="font-size: 12px; color: #00ff88;">● SYSTEM ONLINE</div>
+    <div id="home" class="page active">
+        <div class="balance-card">
+            <div class="label">Баланс активов</div>
+            <div class="amount">143 ₽</div>
+            <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+                <div><small style="color:#00ff88">↗ +10</small><br><span class="label">Прибыль</span></div>
+                <div><small>0</small><br><span class="label">Партнеры</span></div>
+                <div><small>0</small><br><span class="label">Выведено</span></div>
+            </div>
+        </div>
+        <button class="btn-main" onclick="tg.HapticFeedback.impactOccurred('medium')">↗ Пополнить баланс</button>
+        <button class="btn-secondary">💬 Перейти на форум</button>
     </div>
 
-    <h2>Мультимедиа & Звук</h2>
-    <div class="grid">
-        <button class="btn btn-blue" onclick="send('vol_up')">🔊 ГРОМЧЕ</button>
-        <button class="btn btn-blue" onclick="send('vol_down')">🔉 ТИШЕ</button>
+    <div id="portfolio" class="page">
+        <div style="display:flex; justify-content: space-between; padding: 10px;">
+            <div class="label">Всего вложено<br><b style="color:white; font-size: 18px;">400,00 ₽</b></div>
+            <div class="label">Доход в сутки<br><b style="color:#00ff88; font-size: 18px;">+38,40 ₽</b></div>
+        </div>
+        <div class="balance-card" style="border: 1px solid #246bfd55;">
+            <div style="display:flex; justify-content: space-between;">
+                <span>⚡ Тариф 9.6%</span>
+                <span style="color:#00ff88; font-size: 12px;">● В работе</span>
+            </div>
+            <div style="display: flex; gap: 20px; margin-top: 20px;">
+                <div><small class="label">Текущая прибыль</small><br><b style="color:#00ff88">+22,19 ₽</b></div>
+                <div><small class="label">Вклад</small><br><b>400,00 ₽</b></div>
+            </div>
+            <button class="btn-secondary" style="border-color: #246bfd; color: #246bfd;">+ Добавить к депозиту</button>
+        </div>
     </div>
 
-    <h2>Шпионаж & Контроль</h2>
-    <div class="grid">
-        <button class="btn" onclick="send('screenshot')">📸 СКРИН</button>
-        <button class="btn" onclick="send('webcam')">👁 КАМЕРА</button>
-        <button class="btn" onclick="send('record_mic')">🎙 МИКРОФОН</button>
-        <button class="btn" onclick="send('sys_status')">📊 СТАТУС</button>
+    <div id="wallet" class="page">
+        <div class="blue-gradient-card">
+            <div class="label" style="color: #ffffffcc;">Доступно к выводу</div>
+            <div class="amount">622,04 ₽</div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <button class="btn-secondary">↗ Пополнить</button>
+            <button class="btn-secondary">↙ Вывести</button>
+        </div>
     </div>
 
-    <h2>Быстрый запуск</h2>
-    <div class="grid">
-        <button class="btn" onclick="send('launch_game_1')">🎮 CS2</button>
-        <button class="btn" onclick="send('launch_game_2')">⛏ MINECRAFT</button>
-        <button class="btn" onclick="send('chrome')">🌐 BROWSER</button>
-        <button class="btn btn-red" onclick="send('siren')">🚨 СИРЕНА</button>
+    <div class="nav">
+        <div class="nav-item active" onclick="switchTab('home')">🏠<br>Главная</div>
+        <div class="nav-item" onclick="switchTab('portfolio')">💼<br>Портфель</div>
+        <div class="nav-item" onclick="switchTab('wallet')">👛<br>Кошелек</div>
+        <div class="nav-item">👥<br>Партнеры</div>
     </div>
-
-    <button class="btn btn-red" style="width:100%" onclick="tg.close()">ЗАКРЫТЬ ПУЛЬТ</button>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand();
-        function send(cmd) {
-            tg.sendData(cmd);
-            if (tg.HapticFeedback) {
-                tg.HapticFeedback.impactOccurred('medium'); 
-            }
+        tg.headerColor = '#0b0e16';
+
+        function switchTab(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            tg.HapticFeedback.selectionChanged();
         }
     </script>
 </body>
