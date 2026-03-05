@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kip Control System</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            background: #0f0f0f;
+            color: #00ffcc;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .header {
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px #00ffcc;
+        }
+        .btn {
+            background: transparent;
+            border: 2px solid #00ffcc;
+            color: #00ffcc;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 80%;
+            margin: 10px;
+        }
+        .btn:active {
+            background: #00ffcc;
+            color: #000;
+            box-shadow: 0 0 20px #00ffcc;
+        }
+        .status {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">KIP CONTROL</div>
+    
+    <button class="btn" onclick="sendCommand('screenshot')">📸 СДЕЛАТЬ СКРИНШОТ</button>
+    <button class="btn" onclick="sendCommand('msg')">💬 ТЕСТОВОЕ ОКНО</button>
+    
+    <div class="status">System Active | Secure Connection</div>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // Развернуть на весь экран
+
+        async function sendCommand(action) {
+            // Отправляем данные боту
+            tg.sendData(action);
+        }
+    </script>
+</body>
+</html>
